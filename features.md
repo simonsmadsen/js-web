@@ -1,0 +1,29 @@
+# features
+  - routing
+  - mail
+  - cookie/session
+  - migration
+    - mysql
+  - storage
+    - mysql
+  - templating
+    - handlebars
+  - injection
+    - script
+    - babel compile
+    - react
+    - sass|stylus|css
+    - jquery
+    - bootstrap
+  - helpers
+    - password hasing
+# future features
+  - auth
+    - facebook
+    - google
+    - twitter
+  - storage
+    - mysql
+      - search
+      - pageination
+      - select cols/fields
