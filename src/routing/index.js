@@ -34,7 +34,7 @@ const allowCrossDomain = (req, res, next) => {
 let onSocketConnectionFunction = null
 let onSocketDisconnectFunction = null
 
-if (config.allowCrossDomain == 'true') {
+if (config.allowCrossDomain === 'true') {
   app.use(allowCrossDomain)
 }
 

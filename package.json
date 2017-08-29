@@ -1,6 +1,6 @@
 {
   "name": "js-web",
-  "version": "1.3.7",
+  "version": "1.4.1",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
@@ -10,7 +10,12 @@
     "build": "npm run clean && mkdir dist && babel src -d dist"
   },
   "author": "Simon Madsen",
-  "license": "ISC",
+  "repository" :
+  {
+    "type" : "git",
+    "url" : "https://github.com/simonsmadsen/js-web-framework.com"
+  },
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2",
     "babel-cli": "^6.24.1",
@@ -26,7 +31,7 @@
     "handlebars": "^4.0.10",
     "helmet": "^3.6.1",
     "jasmine": "^2.6.0",
-    "js-mysql": "^1.3.5",
+    "js-mysql": "^1.3.6",
     "js-mysql-migration": "^1.0.4",
     "js-pack": "^1.1.3",
     "js-social": "^0.2.3",
