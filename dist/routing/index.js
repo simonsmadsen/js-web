@@ -3,16 +3,15 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.unpackArr = exports.app = undefined;
+exports.start = exports.htmlRoute = exports.unpackArr = exports.app = undefined;
 exports.route = route;
 exports.back = back;
 exports.onSocketDisconnect = onSocketDisconnect;
 exports.onSocketConnection = onSocketConnection;
 exports.redirect = redirect;
 exports.postRoute = postRoute;
-exports.htmlRoute = htmlRoute;
+exports.notFound = notFound;
 exports.socket = socket;
-exports.start = start;
 
 var _inject = require('../inject');
 
@@ -62,7 +61,7 @@ const allowCrossDomain = (req, res, next) => {
 let onSocketConnectionFunction = null;
 let onSocketDisconnectFunction = null;
 
-if (_config2.default.allowCrossDomain == 'true') {
+if (_config2.default.allowCrossDomain === 'true') {
   app.use(allowCrossDomain);
 }
 
@@ -234,7 +233,31 @@ const unpackArr = exports.unpackArr = (arr = []) => {
   return unpacked;
 };
 
-function htmlRoute(route, filename, data, injections) {
+const notFoundRedirect = data => {
+  app.get('*', (req, res) => {
+    const flashed = flashedData(req);
+    respond(null, data, res, req);
+  });
+};
+
+function notFound(filename, data, injections) {
+  if (!filename) {
+    return notFoundRedirect(data);
+  }
+  const templateWithOutData = (0, _template2.default)(filename);
+
+  if (injections) {
+    inject.pack(unpackArr(injections), `${assetsFolder}/${bundleScript}`, `${assetsFolder}/${bundleCSS}`);
+  }
+  app.get('*', (req, res) => {
+    const flashed = flashedData(req);
+    respond(out => {
+      res.status(404).send(handleInjections(unpackArr(injections), templateWithOutData(Object.assign(out, flashed))));
+    }, data, res, req);
+  });
+}
+
+const htmlRoute = exports.htmlRoute = (route, filename, data, injections) => {
   const templateWithOutData = (0, _template2.default)(filename);
 
   if (injections) {
@@ -246,14 +269,14 @@ function htmlRoute(route, filename, data, injections) {
       res.send(handleInjections(unpackArr(injections), templateWithOutData(Object.assign(out, flashed))));
     }, data, res, req);
   });
-}
+};
 
 const socketHandlers = [];
 function socket(path, func) {
   socketHandlers.push([path, func]);
 }
 
-function start() {
+const start = exports.start = () => {
   const server = _config2.default.https !== 'true' ? require('http').createServer(app) : require('https').createServer(serverConfig, app);
   const io = require('socket.io')(server);
 
@@ -277,4 +300,4 @@ function start() {
 
   server.listen(_config2.default.port);
   console.log(`Listen on: ${_config2.default.port}`);
-}
+};

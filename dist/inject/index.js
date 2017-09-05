@@ -30,6 +30,7 @@ exports.socketIO = socketIO;
 exports.bootstrap = bootstrap;
 exports.style = style;
 exports.facebookAuth = facebookAuth;
+exports.googleAnalytics = googleAnalytics;
 exports.googleAuth = googleAuth;
 exports.script = script;
 
@@ -87,6 +88,16 @@ function style(str) {
 
 function facebookAuth(okCallback, bindClass, scope) {
   return pack.scriptRAW(socal.facebookAuthScript(_config2.default.facebook_app_id, okCallback, bindClass, scope));
+}
+
+function googleAnalytics() {
+  return pack.scriptRAW(`
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', '${_config2.default.google_analytics}', 'auto');
+    ga('send', 'pageview');`);
 }
 
 function googleAuth(okCallback, bindClass, scope) {

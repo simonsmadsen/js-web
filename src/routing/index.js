@@ -211,7 +211,39 @@ export const unpackArr = (arr = []) => {
   return unpacked
 }
 
-export function htmlRoute(route, filename, data, injections) {
+const notFoundRedirect = (data) => {
+  app.get('*', (req, res) => {
+    const flashed = flashedData(req)
+    respond(null, data, res, req)
+  })
+}
+
+export function notFound(filename, data, injections){
+  if(!filename){
+    return notFoundRedirect(data)
+  }
+  const templateWithOutData = template(filename)
+
+  if (injections) {
+    inject.pack(unpackArr(injections),
+      `${assetsFolder}/${bundleScript}`,
+      `${assetsFolder}/${bundleCSS}`
+    )
+  }
+  app.get('*', (req, res) => {
+    const flashed = flashedData(req)
+    respond((out) => {
+      res.status(404).send(
+        handleInjections(
+          unpackArr(injections),
+          templateWithOutData(Object.assign(out, flashed))
+        )
+      )
+    }, data, res, req)
+  })
+}
+
+export const htmlRoute = (route, filename, data, injections) => {
   const templateWithOutData = template(filename)
 
   if (injections) {
@@ -238,7 +270,7 @@ export function socket(path, func) {
   socketHandlers.push([path, func])
 }
 
-export function start() {
+export const start = () => {
   const server = config.https !== 'true' ? require('http').createServer(app) :
     require('https').createServer(serverConfig, app)
   const io = require('socket.io')(server)

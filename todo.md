@@ -1,6 +1,14 @@
+Skriv en why / options / posibilities
+Postgres
+NoMysql
+Write a choose frontend (React/Vue or templating)
+Skriv en Contrubute to the site.
+SEO.
 
-Facebook login +
-Google login pænt.
-
-create folder if not exists (assets)
-use libs in injected react or babel injects
+Lav fil tjek på htmlRoute & notFound
+create folder if not exists (assets).
+Google login (fix).
+brug config fil til tegne ting.
+Electron
+React Native.
+Vue
