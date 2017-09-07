@@ -1,3 +1,3 @@
 import * as mysql from 'js-mysql'
-
-export { mysql }
+import * as local from './json-file-storage/index.js'
+export { mysql, local }

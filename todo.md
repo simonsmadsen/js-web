@@ -1,5 +1,6 @@
 Skriv en why / options / posibilities
 Postgres
+Ikke altid start socket.io
 NoMysql
 Write a choose frontend (React/Vue or templating)
 Skriv en Contrubute to the site.

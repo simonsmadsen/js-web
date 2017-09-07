@@ -5,14 +5,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.hash = hash;
 exports.compareHash = compareHash;
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt-node');
 
 const takeFirst = exports.takeFirst = arr => arr.length > 0 ? arr[0] : [];
 
-async function hash(password) {
-  return bcrypt.hash(password, 10);
+function hash(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(5));
 }
 
-async function compareHash(password, hashValue) {
-  return bcrypt.compare(password, hashValue);
+function compareHash(password, hashValue) {
+  return bcrypt.compareSync(password, hashValue);
 }

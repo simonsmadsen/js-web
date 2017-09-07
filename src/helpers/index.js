@@ -1,13 +1,12 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt-node')
 
 export const takeFirst = arr =>
   (arr.length > 0 ? arr[0] : [])
 
-
-export async function hash(password) {
-  return bcrypt.hash(password, 10)
+export function hash(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(5))
 }
 
-export async function compareHash(password, hashValue) {
-  return bcrypt.compare(password, hashValue)
+export function compareHash(password, hashValue) {
+  return bcrypt.compareSync(password, hashValue)
 }
