@@ -1,6 +1,6 @@
 {
   "name": "js-web",
-  "version": "1.6.4",
+  "version": "1.6.6",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "handlebars": "^4.0.10",
     "helmet": "^3.6.1",
     "js-mysql": "^1.3.6",
-    "js-mysql-migration": "^1.0.4",
+    "js-mysql-migration": "^1.0.5",
     "js-pack": "^1.1.3",
     "js-social": "^0.2.3",
     "moment": "^2.18.1",
