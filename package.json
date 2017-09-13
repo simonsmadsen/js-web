@@ -1,6 +1,6 @@
 {
   "name": "js-web",
-  "version": "1.5.9",
+  "version": "1.6.4",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {

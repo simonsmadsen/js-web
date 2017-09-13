@@ -218,8 +218,8 @@ const notFoundRedirect = (data) => {
   })
 }
 
-export function notFound(filename, data, injections){
-  if(!filename){
+export const notFound = (filename, data, injections) => {
+  if (!filename) {
     return notFoundRedirect(data)
   }
   const templateWithOutData = template(filename)
@@ -243,7 +243,17 @@ export function notFound(filename, data, injections){
   })
 }
 
+const fileExists = filename => {
+  if (fs.existsSync(filename)) return true
+  console.log(`${filename} - file not exists!`)
+  return false
+}
+
+const routeErr = route =>
+  console.log('Error in route: '+route)
+
 export const htmlRoute = (route, filename, data, injections) => {
+  if (!fileExists(filename)) return routeErr(route)
   const templateWithOutData = template(filename)
 
   if (injections) {

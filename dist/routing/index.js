@@ -3,14 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.start = exports.htmlRoute = exports.unpackArr = exports.app = undefined;
+exports.start = exports.htmlRoute = exports.notFound = exports.unpackArr = exports.app = undefined;
 exports.route = route;
 exports.back = back;
 exports.onSocketDisconnect = onSocketDisconnect;
 exports.onSocketConnection = onSocketConnection;
 exports.redirect = redirect;
 exports.postRoute = postRoute;
-exports.notFound = notFound;
 exports.socket = socket;
 
 var _inject = require('../inject');
@@ -240,7 +239,7 @@ const notFoundRedirect = data => {
   });
 };
 
-function notFound(filename, data, injections) {
+const notFound = exports.notFound = (filename, data, injections) => {
   if (!filename) {
     return notFoundRedirect(data);
   }
@@ -255,9 +254,18 @@ function notFound(filename, data, injections) {
       res.status(404).send(handleInjections(unpackArr(injections), templateWithOutData(Object.assign(out, flashed))));
     }, data, res, req);
   });
-}
+};
+
+const fileExists = filename => {
+  if (fs.existsSync(filename)) return true;
+  console.log(`${filename} - file not exists!`);
+  return false;
+};
+
+const routeErr = route => console.log('Error in route: ' + route);
 
 const htmlRoute = exports.htmlRoute = (route, filename, data, injections) => {
+  if (!fileExists(filename)) return routeErr(route);
   const templateWithOutData = (0, _template2.default)(filename);
 
   if (injections) {
