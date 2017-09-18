@@ -10,7 +10,11 @@ const db = require('js-web').migration.mysql
   text
  */
 
-db.table('users',{
-  id: 'id',
-  name: 'string'
-})
+ const migrate = async _ => {
+   await db.table('users',{
+     id: 'id',
+     name: 'string'
+   })
+   process.exit()
+ }
+ migrate()
