@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.twitterRequestUrl = exports.twitterRoute = exports.request = exports.inject = exports.helpers = exports.storage = exports.social = exports.moment = undefined;
+exports.twitterRequestUrl = exports.twitterRoute = exports.request = exports.inject = exports.helpers = exports.storage = exports.config = exports.social = exports.moment = undefined;
 
 var _routing2 = require('./routing');
 
@@ -43,9 +43,9 @@ Object.keys(_mail).forEach(function (key) {
 
 var _prettyError = require('./error/pretty-error');
 
-var _config = require('./config');
+var _config2 = require('./config');
 
-var _config2 = _interopRequireDefault(_config);
+var _config3 = _interopRequireDefault(_config2);
 
 var _routing = _interopRequireWildcard(_routing2);
 
@@ -80,11 +80,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const moment = exports.moment = require('moment');
 
 const social = exports.social = _social;
+const config = exports.config = _config3.default;
 
 const storage = exports.storage = _storage;
 const helpers = exports.helpers = _helpers;
 const inject = exports.inject = _inject;
 const request = exports.request = _request;
 
-const twitterRoute = exports.twitterRoute = _social_js.twitterRoute(_routing.route, _config2.default);
-const twitterRequestUrl = exports.twitterRequestUrl = _social_js.twitterRequestUrl(_config2.default);
+const twitterRoute = exports.twitterRoute = _social_js.twitterRoute(_routing.route, _config3.default);
+const twitterRequestUrl = exports.twitterRequestUrl = _social_js.twitterRequestUrl(_config3.default);

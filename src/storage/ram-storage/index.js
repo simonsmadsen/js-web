@@ -1,32 +1,28 @@
 const fs = require('fs')
 
-const readFile = () => JSON.parse(fs.readFileSync('db.json','utf-8'))
-const saveFile = content => fs.writeFileSync('db.json',JSON.stringify(content))
+let data = {}
 
-const ensureFile = () => {
-  if(!fs.existsSync('db.json')){
-    saveFile({})
-  }
-}
+const read = () => data
+const save = content => data = content
 
 const ensureTable = (table) => {
-  const file = readFile()
+  const file = read()
   if(!file[table]){
     file[table] = []
-    saveFile(file)
+    save(file)
   }
   return file[table]
 }
 
 const overrideTable = (table,arr) => {
-  const file = readFile()
+  const file = read()
   file[table] = arr
-  saveFile(file)
+  save(file)
   return arr
 }
 
 const create = (table, obj) => overrideTable(table,
-  ensureTable(table).concat([obj])
+  ensureTable().concat([obj])
 )
 const select = (table,where) => {
   const result = ensureTable(table)
@@ -77,7 +73,6 @@ const update = (table,updates,where) => {
 }
 
 export const table = table => {
-  ensureFile()
 
   return {
     delete: where => _delete(table,where),
