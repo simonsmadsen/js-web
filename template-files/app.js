@@ -20,7 +20,7 @@ const injections = [
 */
 web.htmlRoute('/','html/index.html', async (input,session,cookie) => {
   return {
-    Hello:'World'
+    hello:'World'
   }
 },injections)
 
