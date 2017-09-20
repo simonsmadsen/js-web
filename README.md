@@ -15,29 +15,38 @@ npm install js-web
 ### Examples
 Route displaying a html file
 ```
-const web = require('js-web')
+const {
+    htmlRoute,
+    inject,
+    start
+} = require('js-web')
 
 const injections = [
-  web.inject.jquery(),
-  web.inject.bootstrap(),
-  web.inject.react('react/index.jsx','app')
+  inject.jquery(),
+  inject.bootstrap(),
+  inject.react('react/index.jsx','app')
 ]
 
-web.htmlRoute('/','index.html', _ => {
+htmlRoute('/','index.html', _ => {
  return {users: await users.select()}
 },injections)
 
-web.start()
+start()
 ```
 Get route returning players
 ```
-const web = require('js-web')
+const {
+    htmlRoute,
+    start,
+    storage
+} = require('js-web')
 
-const playerTable = web.storage.mysql.table('players')
-web.htmlRoute('/','index.html', async (input) => {
+const { local, mysql } = storage
+const playerTable = mysql.table('players')
+
+htmlRoute('/','index.html', async (input) => {
 	const players = await playerTable.select()
     return players
 })
-web.start()
-
+start()
 ```
