@@ -10,7 +10,7 @@ const link = (file, linkId) => `import App from '.${noExt(file)}' ` +
   `  document.getElementById('${linkId}')` +
   ')'
 
-export function react(index, linkId) {
+export function react(index, linkId, dev = false) {
   if (!fs.existsSync(index)) {
     console.log(`${index} - file not exists!`)
     return pack.scriptRAW('')
@@ -18,7 +18,13 @@ export function react(index, linkId) {
   const filePath = path.dirname(index)
   const linkedFile = `${filePath}/js-web-linked.js`
   fs.writeFileSync(linkedFile, link(index.replace(filePath, ''), linkId))
-
+  if(dev){
+    return [
+      pack.scriptCDN('https://unpkg.com/react@15/dist/react.js'),
+      pack.scriptCDN('https://unpkg.com/react-dom@15/dist/react-dom.js'),
+      pack.jsx(filePath, 'js-web-linked.js')
+    ]
+  }
   return [
     pack.scriptCDN('https://unpkg.com/react@15/dist/react.min.js'),
     pack.scriptCDN('https://unpkg.com/react-dom@15/dist/react-dom.min.js'),
