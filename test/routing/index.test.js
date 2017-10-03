@@ -1,22 +1,45 @@
-import { route,app } from './../../src/routing'
+import { route, htmlRoute, postRoute, app } from './../../src/routing'
+
 const request = require('supertest')
 
-test('json get route', async () => {
+test('get route (route)', async () => {
+  const jsonResponse = { simon: 'my name2' }
+  route('/test', () => (jsonResponse))
 
-  route('/test', () => ({simon: 'my name'}))
+  const result = await request(app).get('/test')
 
-  request(app)
-  .get('/test')
-  .expect('Content-Type', /json/)
-  .expect('Content-Length', '15')
-  .expect(200)
-  .end(function(err, res) {
-    if (err) throw err
-
-    expect(res).toMatch({simon: 'my name'})
-    done()
-  })
-
+  expect(result.status).toBe(200)
+  expect(result.body).toEqual(jsonResponse)
 })
 
+test('post route (postRoute)', async () => {
+  const jsonResponse = { simon: 'my name2' }
+  postRoute('/test-post', () => (jsonResponse))
 
+  const result = await request(app).post('/test-post')
+
+  expect(result.status).toBe(200)
+  expect(result.body).toEqual(jsonResponse)
+})
+
+test('html route (htmlRoute)', async () => {
+  const htmlFile = 'test/routing/html-test-file.html'
+  htmlRoute('/test-html', htmlFile, async () => {
+    return {name: 'Simon'}
+  })
+
+  const result = await request(app).get('/test-html')
+  expect(result.status).toBe(200)
+  expect(result.text.indexOf('<h1>Hi Simon</h1>') > -1).toBeTruthy()
+})
+
+test('html route2 (htmlRoute)', async () => {
+  const htmlFile = 'test/routing/html-test-file.html'
+  htmlRoute('/test-html2', htmlFile, async () => {
+    return {name: 'Simon2'}
+
+  })
+  const result = await request(app).get('/test-html2')
+  expect(result.status).toBe(200)
+  expect(result.text.indexOf('<h1>Hi Simon</h1>') === -1).toBeTruthy()
+})
