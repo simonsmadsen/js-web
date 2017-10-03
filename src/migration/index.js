@@ -1,5 +1,5 @@
-import * as mysql from 'js-mysql-migration'
+import * as mysql from 'js-mysql'
 
 export const migration = {
-  mysql
+  mysql: mysql.migration
 }

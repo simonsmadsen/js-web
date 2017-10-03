@@ -1,6 +1,6 @@
 {
   "name": "js-web",
-  "version": "1.7.7",
+  "version": "1.8.6",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
@@ -25,14 +25,11 @@
     "express-session": "^1.15.3",
     "handlebars": "^4.0.10",
     "helmet": "^3.6.1",
-    "js-mysql": "^1.4.0",
-    "js-mysql-migration": "^1.0.5",
-    "js-pack": "^1.1.3",
+    "js-mysql": "^1.4.1",
+    "js-pack": "^1.1.9",
     "js-social": "^0.2.3",
     "moment": "^2.18.1",
-    "mysql2": "^1.3.5",
     "nodemailer": "^4.0.1",
-    "pretty-error": "^2.1.1",
     "socket.io": "^2.0.3"
   },
   "babel": {

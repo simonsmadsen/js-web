@@ -41,8 +41,6 @@ Object.keys(_mail).forEach(function (key) {
   });
 });
 
-var _prettyError = require('./error/pretty-error');
-
 var _config2 = require('./config');
 
 var _config3 = _interopRequireDefault(_config2);

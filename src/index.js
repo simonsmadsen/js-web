@@ -1,6 +1,5 @@
 export const moment = require('moment')
 
-import { prettyError } from './error/pretty-error'
 import _config from './config'
 import * as _routing from './routing'
 
