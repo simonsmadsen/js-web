@@ -24,9 +24,7 @@ test('post route (postRoute)', async () => {
 
 test('html route (htmlRoute)', async () => {
   const htmlFile = 'test/routing/html-test-file.html'
-  htmlRoute('/test-html', htmlFile, async () => {
-    return {name: 'Simon'}
-  })
+  htmlRoute('/test-html', htmlFile, async () => ({name: 'Simon'}))
 
   const result = await request(app).get('/test-html')
   expect(result.status).toBe(200)
@@ -35,10 +33,8 @@ test('html route (htmlRoute)', async () => {
 
 test('html route2 (htmlRoute)', async () => {
   const htmlFile = 'test/routing/html-test-file.html'
-  htmlRoute('/test-html2', htmlFile, async () => {
-    return {name: 'Simon2'}
+  htmlRoute('/test-html2', htmlFile, async () => ({name: 'Simon2'}))
 
-  })
   const result = await request(app).get('/test-html2')
   expect(result.status).toBe(200)
   expect(result.text.indexOf('<h1>Hi Simon</h1>') === -1).toBeTruthy()
