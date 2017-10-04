@@ -220,17 +220,12 @@ const handleInjections = (injections, html) => {
   return injectScript(injectStyle(html));
 };
 
-const unpackArr = exports.unpackArr = (arr = []) => {
-  const unpacked = [];
-  arr.forEach(a => {
-    if (a.constructor.name === 'Array') {
-      a.forEach(e => unpacked.push(e));
-    } else {
-      unpacked.push(a);
-    }
-  });
-  return unpacked;
-};
+const unpackArr = exports.unpackArr = (arr = []) => arr.reduce((packed, current) => {
+  if (current.constructor.name === 'Array') return packed.concat(unpackArr(current));
+
+  packed.push(current);
+  return packed;
+}, []);
 
 const notFoundRedirect = data => {
   app.get('*', (req, res) => {
