@@ -2,29 +2,42 @@ const env = require('dotenv')
 const axios = require('axios')
 const fs = require('fs')
 
-
 const envFileUrl =
-  'https://raw.githubusercontent.com/simonsmadsen/js-web/master/.env_template'
+'https://raw.githubusercontent.com/simonsmadsen/js-web/master/.env_template'
 
-const tempaltePath =
-  `${__dirname}/../template-files/.env_template`
+const templatePath =
+`${__dirname}/../template-files/.env_template`
 
-function downloadEnv() {
+const downloadEnv = () =>
   axios.get(envFileUrl).then((r) => {
-    const data = r.data
-    const file = `${process.cwd()}/.env`
-    fs.writeFileSync(file, data)
+    fs.writeFileSync(`${process.cwd()}/.env`, r.data)
   })
+
+const getTemplateConfig = () =>
+  env.config({ path: templatePath }).parsed
+
+const getConfig = () =>
+  env.config().parsed
+
+const downloadAndLoadTemplate = () => {
+  downloadEnv()
+  return getTemplateConfig()
 }
 
-const getConfig = () => {
-  const config = env.config().parsed
-  if (!config) {
-    downloadEnv()
-    return env.config({ path: tempaltePath }).parsed
-  }
-  return config
+const backupConfig = {
+  port: 8080,
+  allowCrossDomain: false,
+  https: false,
+  mysql_host: 'localhost',
+  mysql_user: 'root',
+  mysql_password: '',
+  mysql_database: '',
+  mysql_soft_delete: false,
+  mysql_soft_delete_field: 'deleted',
+  mysql_query_debug: false,
+  mysql_port: 3306
 }
 
-const config = getConfig()
+const config = getConfig() || downloadAndLoadTemplate() || backupConfig
+
 export default config

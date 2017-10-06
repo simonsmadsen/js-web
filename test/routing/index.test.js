@@ -2,10 +2,6 @@ import request from 'supertest'
 
 import { route, htmlRoute, postRoute, app } from './../../src/routing'
 
-// process.on('unhandledRejection', (reason, p) => {
-//   console.log(p)
-// })
-
 describe('routing', () => {
   let server
 
